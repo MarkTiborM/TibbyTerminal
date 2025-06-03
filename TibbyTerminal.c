@@ -1,17 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//allocated 1024 bytes for a line of input
-//fget to read from the standard input and return a point to the input string
-
 char *read_line() {
     char *line = malloc(1024); 
     if (!line) return NULL;
     fgets(line, 1024, stdin); 
     return line;
 }
-
-//split_lines to break the input command into arguments
 
 char **split_lines(char *line) {
     char **args = malloc(sizeof(char *) * 2); 
@@ -20,14 +15,10 @@ char **split_lines(char *line) {
     return args;
 }
 
-//simulated command execution for testing purposes
-
 int dash_launch(char **args) {
     printf("Simulated command: %s\n", args[0]);
     return 0; 
 }
-
-//loop function that reads the input from the user and passes it to the command runner
 
 void loop() {
     char *line;
