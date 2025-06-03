@@ -50,9 +50,9 @@ Shells act as a parent process to the act of accessing and executing processes.
 
 ### This shell is simple enough where there won't be any configuration files. 
 
-# Starting of the Shell Loop
+# Starting of the Main Shell Loop
 To start out, we need a driving function of the loop. Our logic should go as follows : a prompt tells us that the terminal is ready to accept input commands from the user.
-Our prompt for the time being is going to be tibby >. 
+Our prompt for the time being is going to be tibby > in the color red. 
 
 ```
 void loop() {
@@ -61,8 +61,8 @@ void loop() {
    int status = 1;
 
    do {
-      printf("\033[1;31m");
-      printf("tibby > ");
+      printf("\033[1;31m"); //set color to red
+      printf("tibby > "); // print the accept commands message
       line = read_line();
       flag = 0;
       args = split_lines(line);
