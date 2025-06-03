@@ -1,5 +1,5 @@
 # Tibby Terminal
-A Project where describe my process of testing and working with my simple shell program to simulate commands.
+A Project where describe my process of testing and working with my simple shell program to simulate commands. 
 
 ```
  ______   __     ______     ______     __  __        ______   ______     ______     __    __     __     __   __     ______     __        
@@ -69,17 +69,12 @@ after each command until one input has been completed (status == 0). This versio
 #include <stdio.h>
 #include <stdlib.h>
 
-//allocated 1024 bytes for a line of input
-//fget to read from the standard input and return a point to the input string
-
 char *read_line() {
     char *line = malloc(1024); 
     if (!line) return NULL;
     fgets(line, 1024, stdin); 
     return line;
 }
-
-//split_lines to break the input command into arguments
 
 char **split_lines(char *line) {
     char **args = malloc(sizeof(char *) * 2); 
@@ -88,14 +83,10 @@ char **split_lines(char *line) {
     return args;
 }
 
-//simulated command execution for testing purposes
-
 int dash_launch(char **args) {
     printf("Simulated command: %s\n", args[0]);
     return 0; 
 }
-
-//loop function that reads the input from the user and passes it to the command runner
 
 void loop() {
     char *line;
@@ -125,8 +116,14 @@ int main() {
 ![main](https://github.com/user-attachments/assets/6d49db60-cfce-4fd1-ab49-ae9f6515e9b0)
 
 
-Resources I have used : 
+Resources I have used to make this tutorial: 
 - https://danishpraka.sh/posts/write-a-shell/
 -  https://igupta.in/blog/writing-a-unix-shell-part-1/
 -  https://brennan.io/2015/01/16/write-a-shell-in-c/
+
+## TODO
+- Run real shell commands
+- Add operating system info commands (cd, ls, etc...)
+- Add command history
+
 
