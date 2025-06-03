@@ -51,29 +51,15 @@ Shells act as a parent process to the act of accessing and executing processes.
 ### This shell is simple enough where there won't be any configuration files. 
 
 # Main Shell Loop
-To start out, we need a driving function of the loop. Our logic should go as follows : a prompt tells us that the terminal is ready to accept input commands from the user.
-Our prompt for the time being is going to be tibby > in the color red. 
+To start out, we need a driving function of the loop. Our logic should go as follows: 
 
-```
+- A prompt tells us that the terminal is ready to accept input commands from the user by outputting 
+something
 
-void loop() {
-    char *line;
-    char **args;
-    int status = 1;
-    int flag = 0;
+- A prompt tells us what out input command was by outputting the requested command
 
-    do {
-        printf("> ");
-        line = read_line();
-        flag = 0;
-        args = split_lines(line);
-        status = dash_launch(args);
-        free(line);
-        free(args);
-    } while (status);
-}
-```
-# Compilation ready, text input test file: 
+In this case I am making it output "tibby >" in red to symbolize the tibby terminal is ready for command input and "Simulated command:" to show for the testing purposes what the user input was.
+## Shell Initialization: 
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -103,8 +89,9 @@ void loop() {
     int status = 1;
     int flag = 0;
 
+
     do {
-        printf("> ");
+        printf("\033[31mtibby > \033[0m");
         line = read_line();
         flag = 0;
         args = split_lines(line);
@@ -121,4 +108,4 @@ int main() {
 ```
 
 ## Output should be : 
-![main_loop](https://github.com/user-attachments/assets/fbb06633-fb58-49f2-b4ad-6c3853a22790)
+![main](https://github.com/user-attachments/assets/6d49db60-cfce-4fd1-ab49-ae9f6515e9b0)
