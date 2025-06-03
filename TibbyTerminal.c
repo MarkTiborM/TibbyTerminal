@@ -36,7 +36,7 @@ void loop() {
         free(line);
         free(args);
     } while (status);
-}#
+}
 
 int main() {
     loop();
