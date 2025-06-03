@@ -1,5 +1,5 @@
 # Tibby Terminal
-A Project where I make my own shell and show you how to make your own.
+A Project where describe my process of making my own shell.
 ```
  ______   __     ______     ______     __  __        ______   ______     ______     __    __     __     __   __     ______     __        
 /\__  _\ /\ \   /\  == \   /\  == \   /\ \_\ \      /\__  _\ /\  ___\   /\  == \   /\ "-./  \   /\ \   /\ "-.\ \   /\  __ \   /\ \       
@@ -51,15 +51,19 @@ Shells act as a parent process to the act of accessing and executing processes.
 ### This shell is simple enough where there won't be any configuration files. 
 
 # Main Shell Loop
-To start out, we need a driving function of the loop. Our logic should go as follows: 
+To start out, we need a driving function of the loop to test our commands. Our logic should go as follows: 
 
 - A prompt tells us that the terminal is ready to accept input commands from the user by outputting 
 something
 
-- A prompt tells us what out input command was by outputting the requested command
+- A prompt tells us that our request went through 
 
 In this case I am making it output "tibby >" in red to symbolize the tibby terminal is ready for command input and "Simulated command:" to show for the testing purposes what the user input was.
-## Shell Initialization: 
+So far, we need to allocated 1024 bytes for a line of input, use fget() to read from the standard input and return a point to the input string to show our request went through. We also have 
+split_lines() to break the input command into arguments. To add on, of coarse we have our main loop function that reads the input from the user and passes it to the command runner + frees the allocated memory
+after each command until one input has been completed (status == 0). This version of the code is just to test everything before we can start reading the user commands.
+
+## Shell Initialization and Testing: 
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -80,7 +84,7 @@ char **split_lines(char *line) {
 
 int dash_launch(char **args) {
     printf("Simulated command: %s\n", args[0]);
-    return 0; // return 0 to exit the loop
+    return 0; 
 }
 
 void loop() {
@@ -99,7 +103,7 @@ void loop() {
         free(line);
         free(args);
     } while (status);
-}
+}#
 
 int main() {
     loop();
@@ -109,3 +113,7 @@ int main() {
 
 ## Output should be : 
 ![main](https://github.com/user-attachments/assets/6d49db60-cfce-4fd1-ab49-ae9f6515e9b0)
+
+# Tokenizing Input
+
+
