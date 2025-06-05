@@ -1,5 +1,5 @@
 # Tibby Terminal
-A Project where describe my process of testing and working with my simple shell program to simulate commands. 
+## A Project where I describe how to make your own Simple Shell with C. 
 
 ```
  ______   __     ______     ______     __  __        ______   ______     ______     __    __     __     __   __     ______     __        
@@ -58,65 +58,89 @@ To start out, we need a driving function of the loop to test our commands. Our l
 something
 
 - A prompt tells us that our request went through 
-
-In this case I am making it output "tibby >" in red to symbolize the tibby terminal is ready for command input and "Simulated command:" to show for the testing purposes what the user input was.
-So far, we need to allocated 1024 bytes for a line of input, use fget() to read from the standard input and return a point to the input string to show our request went through. We also have 
-split_lines() to break the input command into arguments. To add on, of coarse we have our loop function that reads the input from the user and passes it to the command runner + frees the allocated memory
-after each command until one input has been completed (status == 0). This version of the code is just to test everything before we can start reading the user commands.
-
-## Shell Initialization and Testing: 
+# Blueprint of how our program should work: 
 ```
-#include <stdio.h>
-#include <stdlib.h>
+int main(int argc, char **argv)
+{
+  // Main Loop
+  void loop()
 
-char *read_line() {
-    char *line = malloc(1024); 
-    if (!line) return NULL;
-    fgets(line, 1024, stdin); 
-    return line;
-}
+  // Read User Commands 
+  char * read_line()
 
-char **split_lines(char *line) {
-    char **args = malloc(sizeof(char *) * 2); 
-    args[0] = line;
-    args[1] = NULL;
-    return args;
-}
+  // Tokenize Input
+  char * * split_line()
 
-int dash_launch(char **args) {
-    printf("Simulated command: %s\n", args[0]);
-    return 0; 
-}
+  // Execute Commands
+  int dash_execute()
 
+  //Crash Handeling
+  return EXIT_SUCCESS/EXIT_FAILURE message;
+} 
+
+```
+## Shell Initialization and Testing:  
+
+```
 void loop() {
-    char *line;
-    char **args;
-    int status = 1;
-    int flag = 0;
+   char * line;
+   char * * args;
+   int status = 1;
 
-
-    do {
-        printf("\033[31mtibby > \033[0m");
-        line = read_line();
-        flag = 0;
-        args = split_lines(line);
-        status = dash_launch(args);
-        free(line);
-        free(args);
-    } while (status);
+   do {
+      printf("\033[31mtibby > \033[0m");
+      line = read_line();
+      flag = 0;
+      args = split_lines(line);
+      status = dash_launch(args);
+      free(line);
+      free(args);
+   } while (status);
 }
+```
+In this section of the code, we declare a pointer to a char named line and another to args with in the first two lines of the loop. The line char
+pointer will hold the command given from the user within the read_line() function. Status stores the return of functions made by command execution (exit or execute).
+If the exit command has been placed, force the break of the loop by returning 0. The free(line) and free(args) free up the memory as manaul garbage collection.
 
-int main() {
-    loop();
-    return 0;
+## Reading User Commands
+```
+char * read_line() {
+  int buffsize = 1024;
+  int position = 0;
+  char * buffer = malloc(sizeof(char) * buffsize);
+  int c;
+
+  if (!buffer) {
+    fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
+    exit(EXIT_FAILURE);
+  }
+
+  while (1) {
+    c = getchar();
+    if (c == EOF || c == '\n') {
+      //printf("\n");
+      buffer[position] = '\0';
+      return buffer;
+    } else {
+      buffer[position] = c;
+    }
+    position++;
+
+    if (position >= buffsize) {
+      buffsize += 1024;
+      buffer = realloc(buffer, buffsize);
+
+      if (!buffer) {
+        fprintf(stderr, "dash: Allocation error\n");
+        exit(EXIT_FAILURE);
+      }
+    }
+  }
 }
 ```
 
-## Output should be : 
-![main](https://github.com/user-attachments/assets/6d49db60-cfce-4fd1-ab49-ae9f6515e9b0)
 
-
-Resources I have used to make this tutorial: 
+Resources used to make this tutorial: 
 - https://danishpraka.sh/posts/write-a-shell/
 -  https://igupta.in/blog/writing-a-unix-shell-part-1/
 -  https://brennan.io/2015/01/16/write-a-shell-in-c/
